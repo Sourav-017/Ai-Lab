@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Grid Simulation</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/boot.js"></script>
+    <script src="logic.js"></script>
+  </head>
+  <body>
+    <script>
+      describe("Movement Functions", function () {
+        afterEach(function () {
+          console.log("Movement test case passed.");
+        });
+
+        it("move_up() passed", function () {
+          const result = moveUp(2, 2);
+          expect(result).toEqual({ row: 1, col: 2 });
+        });
+
+        it("move_down() passed", function () {
+          const result = moveDown(2, 2);
+          expect(result).toEqual({ row: 3, col: 2 });
+        });
+
+        it("move_left() passed", function () {
+          const result = moveLeft(2, 2);
+          expect(result).toEqual({ row: 2, col: 1 });
+        });
+
+        it("move_right() passed", function () {
+          const result = moveRight(2, 2);
+          expect(result).toEqual({ row: 2, col: 3 });
+        });
+      });
+
+      describe("findNearestObject", function () {
+        // afterEach(function () {
+        //   console.log("findNearestObject() passed.");
+        // });
+
+        it("findNearestObject() passed.", function () {
+          const grid = [
+            ["open", "open", "blocked", "open"],
+            ["open", "object", "open", "open"],
+            ["open", "open", "blocked", "open"],
+            ["open", "open", "open", "open"],
+          ];
+          const startPosition = { row: 0, col: 0 };
+          const result = findNearestObject(
+            startPosition.row,
+            startPosition.col,
+            grid
+          );
+          expect(result).toBeDefined();
+          expect(result.location).toEqual({ row: 1, col: 1 });
+          expect(result.path).toBeDefined();
+        });
+      });
+      describe("detect_hurdle", function () {
+        afterEach(function () {
+          console.log("detect_hurdle() passed.");
+        });
+
+        it("detect_hurdle() passed", function () {
+          const grid = [
+            ["open", "blocked", "open"],
+            ["open", "open", "open"],
+            ["open", "open", "blocked"],
+          ];
+          expect(detect_hurdle(grid, 0, 0)).toBe(false);
+          expect(detect_hurdle(grid, 0, 1)).toBe(true);
+        });
+      });
+
+      describe("detect_object", function () {
+
+        it("detect_object() passed.", function () {
+          const grid = [
+            ["open", "object", "open"],
+            ["open", "open", "object"],
+            ["open", "open", "open"],
+          ];
+          expect(detect_object(grid, 0, 1)).toBe(true);
+          expect(detect_object(grid, 1, 1)).toBe(false);
+        });
+      });
+    </script>
+  </body>
+</html>
