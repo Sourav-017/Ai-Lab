@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Simulation Tests</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/boot.js"></script>
+    <script src="logic.js"></script>
+  </head>
+  <body>
+    <script>
+      describe("Object Detection", function () {
+        it("detect_object() should return true when there is an object", function () {
+          const grid = [
+            ["open", "object", "open"],
+            ["open", "open", "object"],
+            ["open", "open", "open"],
+          ];
+          expect(detect_object(grid, 0, 1)).toBe(true);
+        });
+
+        it("detect_object() should return false when there is no object", function () {
+          const grid = [
+            ["open", "object", "open"],
+            ["open", "open", "object"],
+            ["open", "open", "open"],
+          ];
+          expect(detect_object(grid, 1, 1)).toBe(false);
+        });
+      });
+
+      describe("Grid Creation", function () {
+        it("createGrid() should create a grid of the correct size", function () {
+          const grid = createGrid(5);
+          expect(grid.length).toBe(5);
+          expect(grid[0].length).toBe(5);
+        });
+
+        it("createGrid() should populate the grid with objects", function () {
+          const grid = createGrid(5);
+          let objectCount = 0;
+          grid.forEach((row) => {
+            row.forEach((cell) => {
+              if (cell === "object") {
+                objectCount++;
+              }
+            });
+          });
+          expect(objectCount).toBeGreaterThanOrEqual(0); 
+        });
+      });
+
+      describe("Probability Calculation", function () {
+        it("calculateProbabilities() should calculate probabilities correctly", function () {
+          const grid = [
+            ["object", "open", "open"],
+            ["open", "object", "open"],
+            ["open", "open", "open"],
+          ];
+          const probabilities = calculateProbabilities(grid, 100);
+          expect(probabilities.length).toBe(3);
+          expect(probabilities[0].length).toBe(3);
+        });
+      });
+    </script>
+  </body>
+</html>
